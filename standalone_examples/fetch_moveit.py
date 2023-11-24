@@ -51,7 +51,7 @@ if assets_root_path is None:
     sys.exit()
 
 # Preparing stage
-viewports.set_camera_view(eye=np.array([1.2, 1.2, 0.8]), target=np.array([0, 0, 0.5]))
+viewports.set_camera_view(eye=np.array([3.5, 3.5, 3.5]), target=np.array([0, 0, 0.5]))
 
 # Loading the fetch robot USD
 # asset_path = "/home/yuxiang/ros_workspace/src/fetch_ros/fetch_description/robots/fetch/fetch.usd"
