@@ -1,0 +1,4 @@
+torso_controller:
+  type: "position_controllers/JointTrajectoryController"
+  joints:
+    - torso_lift_joint

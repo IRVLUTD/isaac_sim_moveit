@@ -16,15 +16,30 @@
   <url type="Documentation">https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/overview.html</url>
   <url type="Forums">https://forums.developer.nvidia.com/c/agx-autonomous-machines/isaac/simulation</url>
 
+  <build_depend>std_msgs</build_depend>
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>rospy</build_depend>
   <build_depend>sensor_msgs</build_depend>
+  <build_depend>roscpp</build_depend>  
   <build_export_depend>rospy</build_export_depend>
   <build_export_depend>sensor_msgs</build_export_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>controller_manager</build_depend>
+  <build_depend>transmission_interface</build_depend>
+  <build_depend>hardware_interface</build_depend>
+  <build_depend>joint_limits_interface</build_depend>
+  <build_depend>trajectory_msgs</build_depend>
+
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>transmission_interface</exec_depend>
+  <exec_depend>hardware_interface</exec_depend>
+  <exec_depend>joint_limits_interface</exec_depend>
+  <exec_depend>trajectory_msgs</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
-  <exec_depend>panda_moveit_config</exec_depend>
-  <exec_depend>franka_description</exec_depend>
+  <exec_depend>fetch_description</exec_depend>
   <exec_depend>pilz_industrial_motion</exec_depend>
   <exec_depend>moveit_planners_chomp</exec_depend>
   <exec_depend>rviz_visual_tools</exec_depend>
