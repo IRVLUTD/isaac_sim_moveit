@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>isaac_moveit</name>
+  <name>isaac_sim_moveit</name>
   <version>0.1.0</version>
   <description>The moveit samples package</description>
   
-  <maintainer email="isaac-sim@todo.todo">isaac sim</maintainer>
+  <maintainer email="isaac-sim@todo.todo">isaac sim and IRVL at UT Dallas</maintainer>
   
   <license>Copyright (c) 2022, NVIDIA CORPORATION. All rights reserved.
     NVIDIA CORPORATION and its licensors retain all intellectual property

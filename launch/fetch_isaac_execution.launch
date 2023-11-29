@@ -4,9 +4,9 @@
   <arg name="debug" default="false" />
   <arg name="pipeline" default="ompl" />
 
-  <!-- <node pkg="isaac_moveit" name="fetch_combined_joints_publisher" type="fetch_combined_joints_publisher.py" /> -->
+  <!-- <node pkg="isaac_sim_moveit" name="fetch_combined_joints_publisher" type="fetch_combined_joints_publisher.py" /> -->
 
-  <include file="$(find fetch_moveit_config)/launch/planning_context.launch">
+  <include file="$(find isaac_sim_moveit)/launch/planning_context.launch">
     <arg name="load_robot_description" value="true"/>
   </include>  
 
@@ -14,7 +14,7 @@
   <!-- <node name="joint_command_publisher" pkg="topic_tools" type="relay" args="/move_group/fake_controller_joint_states /joint_command_desired" />   -->
 
   <!-- Start MoveIt -->
-  <include file="$(find isaac_moveit)/launch/move_group.launch" >
+  <include file="$(find isaac_sim_moveit)/launch/move_group.launch" >
     <arg name="info" value="true"/><!-- publish grasp markers -->
     <arg name="allow_trajectory_execution" value="true"/>
     <arg name="fake_execution" value="false"/>
@@ -22,11 +22,11 @@
     <arg name="pipeline" value="$(arg pipeline)"/>
   </include>
 
-  <arg name="rviz_command_args" value="-d $(find isaac_moveit)/rviz/isaac_moveit_config.rviz" />
+  <arg name="rviz_command_args" value="-d $(find isaac_sim_moveit)/rviz/isaac_moveit_config.rviz" />
 
   <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false"
 	args="$(arg rviz_command_args)" output="screen">
-    <rosparam command="load" file="$(find isaac_moveit)/config/kinematics.yaml"/>
+    <rosparam command="load" file="$(find isaac_sim_moveit)/config/kinematics.yaml"/>
   </node>
   
 </launch>

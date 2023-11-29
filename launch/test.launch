@@ -12,12 +12,12 @@
   <param name="use_sim_time" value="true"/>
 
   <!-- Load hardware interface -->
-  <node name="fetch_hardware_interface" pkg="isaac_moveit" type="fetch_hardware_interface"
+  <node name="fetch_hardware_interface" pkg="isaac_sim_moveit" type="fetch_hardware_interface"
   respawn="false" output="screen" launch-prefix="$(arg launch_prefix)">
   </node>  
 
   <!-- Setup controllers -->
-  <rosparam file="$(find isaac_moveit)/config/default_controllers.yaml" command="load" />
+  <rosparam file="$(find isaac_sim_moveit)/config/default_controllers.yaml" command="load" />
 
   <!-- Load the default controllers -->
   <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
@@ -27,9 +27,9 @@
             arm_controller
             " />
 
-  <!--node pkg="isaac_moveit" name="fetch_combined_joints_publisher" type="fetch_combined_joints_publisher.py" /-->
+  <!--node pkg="isaac_sim_moveit" name="fetch_combined_joints_publisher" type="fetch_combined_joints_publisher.py" /-->
 
-  <!--node pkg="isaac_moveit" name="prepare_robot" type="prepare_simulated_robot_pick_place.py" /-->
+  <!--node pkg="isaac_sim_moveit" name="prepare_robot" type="prepare_simulated_robot_pick_place.py" /-->
 
 
 </launch>

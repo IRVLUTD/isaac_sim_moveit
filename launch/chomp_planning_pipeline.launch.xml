@@ -17,6 +17,6 @@
 
    <param name="collision_detector" value="Hybrid" />
 
-   <rosparam command="load" file="$(find isaac_moveit)/config/chomp_planning.yaml" />
+   <rosparam command="load" file="$(find isaac_sim_moveit)/config/chomp_planning.yaml" />
 
 </launch>
