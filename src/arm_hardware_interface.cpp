@@ -133,8 +133,7 @@ bool ArmHardwareInterface::init(
   }
 
   // Start publishers
-  pub_joint_command_ = nh_.advertise<sensor_msgs::JointState>("/robot/"+arm_name_+
-                       "/joint_command",1);
+  pub_joint_command_ = nh_.advertise<sensor_msgs::JointState>("joint_command",1);
 
   pub_trajectory_command_ = nh_.advertise<trajectory_msgs::JointTrajectory>("/robot/"+arm_name_+
                             "_trajectory_controller/command",10);

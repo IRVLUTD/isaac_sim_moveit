@@ -20,10 +20,12 @@
   <rosparam file="$(find isaac_moveit)/config/default_controllers.yaml" command="load" />
 
   <!-- Load the default controllers -->
-  <!--node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
+  <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
   output="screen" ns="/" args="spawn
             torso_controller
-            " /-->
+            head_controller
+            arm_controller
+            " />
 
   <!--node pkg="isaac_moveit" name="fetch_combined_joints_publisher" type="fetch_combined_joints_publisher.py" /-->
 

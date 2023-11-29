@@ -2,3 +2,32 @@ torso_controller:
   type: "position_controllers/JointTrajectoryController"
   joints:
     - torso_lift_joint
+
+head_controller:
+  type: "position_controllers/JointTrajectoryController"
+  joints:
+    - head_pan_joint
+    - head_tilt_joint
+
+arm_controller:
+  type: "position_controllers/JointTrajectoryController"
+  joints:
+    - shoulder_pan_joint
+    - shoulder_lift_joint
+    - upperarm_roll_joint
+    - elbow_flex_joint
+    - forearm_roll_joint
+    - wrist_flex_joint
+    - wrist_roll_joint
+
+arm_with_torso_controller:
+  type: "position_controllers/JointTrajectoryController"
+  joints:
+    - torso_lift_joint
+    - shoulder_pan_joint
+    - shoulder_lift_joint
+    - upperarm_roll_joint
+    - elbow_flex_joint
+    - forearm_roll_joint
+    - wrist_flex_joint
+    - wrist_roll_joint
