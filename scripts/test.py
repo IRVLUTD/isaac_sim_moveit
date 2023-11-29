@@ -46,7 +46,7 @@ arm_intermediate_positions  = [0.0, -0.62, 0, 0, 0.0, 0.62, 0.0]
 # arm_joint_positions  = [1.1, -0.64, -1.83, 0.96, 1.13, -.96, 0.0]
 arm_joint_positions  = [1.32, 0.7, 0.0, -2.0, 0.0, -0.57, 0.0]
 head_joint_names = ["head_pan_joint", "head_tilt_joint"]
-head_joint_positions = [0.0, 0.0]
+head_joint_positions = [0.5, 0.5]
 torso_joint_names = ["torso_lift_joint"]
 torso_joint_positions = [0.4]
 
@@ -69,17 +69,17 @@ if __name__ == "__main__":
     rospy.loginfo("...connected.")    
 
     # torso
-    # trajectory = JointTrajectory()
-    # trajectory.joint_names = torso_joint_names
-    # trajectory.points.append(JointTrajectoryPoint())
-    # trajectory.points[0].positions = torso_joint_positions
-    # trajectory.points[0].velocities = [0.0] * len(torso_joint_positions)
-    # trajectory.points[0].accelerations = [0.0] * len(torso_joint_positions)
-    # trajectory.points[0].time_from_start = rospy.Duration(5.0)
+    trajectory = JointTrajectory()
+    trajectory.joint_names = torso_joint_names
+    trajectory.points.append(JointTrajectoryPoint())
+    trajectory.points[0].positions = torso_joint_positions
+    trajectory.points[0].velocities = [0.0] * len(torso_joint_positions)
+    trajectory.points[0].accelerations = [0.0] * len(torso_joint_positions)
+    trajectory.points[0].time_from_start = rospy.Duration(5.0)
 
-    # torso_goal = FollowJointTrajectoryGoal()
-    # torso_goal.trajectory = trajectory
-    # torso_goal.goal_time_tolerance = rospy.Duration(0.0)
+    torso_goal = FollowJointTrajectoryGoal()
+    torso_goal.trajectory = trajectory
+    torso_goal.goal_time_tolerance = rospy.Duration(0.0)
 
     # head
     trajectory = JointTrajectory()
@@ -95,36 +95,36 @@ if __name__ == "__main__":
     head_goal.goal_time_tolerance = rospy.Duration(0.0)
 
     # arm
-    # trajectory = JointTrajectory()
-    # trajectory.joint_names = arm_joint_names
-    # trajectory.points.append(JointTrajectoryPoint())
-    # trajectory.points[0].positions = [0.0] * len(arm_joint_positions)
-    # trajectory.points[0].velocities =  [0.0] * len(arm_joint_positions)
-    # trajectory.points[0].accelerations = [0.0] * len(arm_joint_positions)
-    # trajectory.points[0].time_from_start = rospy.Duration(1.0)
-    # trajectory.points.append(JointTrajectoryPoint())
-    # trajectory.points[1].positions = arm_intermediate_positions
-    # trajectory.points[1].velocities =  [0.0] * len(arm_joint_positions)
-    # trajectory.points[1].accelerations = [0.0] * len(arm_joint_positions)
-    # trajectory.points[1].time_from_start = rospy.Duration(4.0)
-    # trajectory.points.append(JointTrajectoryPoint())
-    # trajectory.points[2].positions = arm_joint_positions
-    # trajectory.points[2].velocities =  [0.0] * len(arm_joint_positions)
-    # trajectory.points[2].accelerations = [0.0] * len(arm_joint_positions)
-    # trajectory.points[2].time_from_start = rospy.Duration(7.5)
+    trajectory = JointTrajectory()
+    trajectory.joint_names = arm_joint_names
+    trajectory.points.append(JointTrajectoryPoint())
+    trajectory.points[0].positions = [0.0] * len(arm_joint_positions)
+    trajectory.points[0].velocities =  [0.0] * len(arm_joint_positions)
+    trajectory.points[0].accelerations = [0.0] * len(arm_joint_positions)
+    trajectory.points[0].time_from_start = rospy.Duration(1.0)
+    trajectory.points.append(JointTrajectoryPoint())
+    trajectory.points[1].positions = arm_intermediate_positions
+    trajectory.points[1].velocities =  [0.0] * len(arm_joint_positions)
+    trajectory.points[1].accelerations = [0.0] * len(arm_joint_positions)
+    trajectory.points[1].time_from_start = rospy.Duration(4.0)
+    trajectory.points.append(JointTrajectoryPoint())
+    trajectory.points[2].positions = arm_joint_positions
+    trajectory.points[2].velocities =  [0.0] * len(arm_joint_positions)
+    trajectory.points[2].accelerations = [0.0] * len(arm_joint_positions)
+    trajectory.points[2].time_from_start = rospy.Duration(7.5)
 
-    # arm_goal = FollowJointTrajectoryGoal()
-    # arm_goal.trajectory = trajectory
-    # arm_goal.goal_time_tolerance = rospy.Duration(0.0)
+    arm_goal = FollowJointTrajectoryGoal()
+    arm_goal.trajectory = trajectory
+    arm_goal.goal_time_tolerance = rospy.Duration(0.0)
 
 
     rospy.loginfo("Setting positions...")
-    # torso_client.send_goal(torso_goal)
-    # torso_client.wait_for_result(rospy.Duration(6.0))
+    torso_client.send_goal(torso_goal)
+    torso_client.wait_for_result(rospy.Duration(6.0))
 
     head_client.send_goal(head_goal)
     head_client.wait_for_result(rospy.Duration(6.0))
 
-    # arm_client.send_goal(arm_goal)
-    # arm_client.wait_for_result(rospy.Duration(6.0))
+    arm_client.send_goal(arm_goal)
+    arm_client.wait_for_result(rospy.Duration(6.0))
     rospy.loginfo("...done")
