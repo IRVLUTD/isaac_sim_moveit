@@ -1,4 +1,4 @@
-MoveIt interface for Isaac Sim
+MoveIt interface of the Fetch Mobile Manipulator for Isaac Sim
 
 ## Usage
 1. launch standalone application using Isaac Sim Python
@@ -7,10 +7,16 @@ MoveIt interface for Isaac Sim
     ./$ISAAC_ROOT/python fetch_moveit.py
     ``` 
 
-2. launch moveit
+2. launch fetch controllers
     ```Shell
     cd launch
-    roslaunch fetch_isaac_execution.launch
+    roslaunch fetch_isaac_controllers.launch
+    ```     
+
+3. launch moveit
+    ```Shell
+    cd launch
+    roslaunch fetch_isaac_moveit.launch
     ``` 
 
 ## Example

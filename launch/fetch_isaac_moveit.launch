@@ -4,14 +4,9 @@
   <arg name="debug" default="false" />
   <arg name="pipeline" default="ompl" />
 
-  <!-- <node pkg="isaac_sim_moveit" name="fetch_combined_joints_publisher" type="fetch_combined_joints_publisher.py" /> -->
-
   <include file="$(find isaac_sim_moveit)/launch/planning_context.launch">
     <arg name="load_robot_description" value="true"/>
-  </include>  
-
-  <!-- <node name="joint_state_desired_publisher" pkg="topic_tools" type="relay" args="/joint_states /joint_states_desired" /> -->
-  <!-- <node name="joint_command_publisher" pkg="topic_tools" type="relay" args="/move_group/fake_controller_joint_states /joint_command_desired" />   -->
+  </include>
 
   <!-- Start MoveIt -->
   <include file="$(find isaac_sim_moveit)/launch/move_group.launch" >

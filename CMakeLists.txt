@@ -64,5 +64,6 @@ catkin_install_python(PROGRAMS
   scripts/panda_combined_joints_publisher.py
   scripts/fetch_combined_joints_publisher.py
   scripts/prepare_simulated_robot_pick_place.py
+  scripts/gripper_action_server.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
