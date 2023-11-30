@@ -30,4 +30,7 @@
   <!-- start the gripper controller -->
   <node pkg="isaac_sim_moveit" name="gripper_controller" type="gripper_action_server.py" />
 
+  <!-- prepare the robot -->
+  <node pkg="isaac_sim_moveit" name="prepare_robot" type="prepare_simulated_robot_pick_place.py" />  
+
 </launch>
