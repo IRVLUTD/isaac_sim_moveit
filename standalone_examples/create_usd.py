@@ -12,23 +12,16 @@ def import_urdf(urdf_path, dest_path):
     Args: None
     """
     _status, _config = omni.kit.commands.execute("URDFCreateImportConfig")
-    # _config.merge_fixed_joints = True
-    # _config.convex_decomp = True
-    # _config.import_inertia_tensor = True
-    # _config.fix_base = True
-    # _config.make_default_prim = True
-    # _config.self_collision = False
-    # _config.create_physics_scene = True
-    # _config.import_inertia_tensor = False
-    # _config.make_instanceable = True
-    # _config.instanceable_usd_path = dest_path
-    
     _config.merge_fixed_joints = True
     _config.convex_decomp = True
+    _config.import_inertia_tensor = True
+    _config.fix_base = True
+    _config.make_default_prim = True
+    _config.self_collision = False
+    _config.create_physics_scene = True
     _config.import_inertia_tensor = False
-    _config.fix_base = False
-    _config.distance_scale = 1
     _config.make_instanceable = True
+    _config.instanceable_usd_path = dest_path
 
     result = omni.kit.commands.execute(
             "URDFParseAndImportFile", 
@@ -70,6 +63,8 @@ if __name__ == "__main__":
         urdf_p  = os.path.join(model_p, f"{model}.urdf")
         usd_p = os.path.join(model_p, f"{model}.usd")
         print(usd_p)
+        if os.path.exists(usd_p):
+            os.remove(usd_p)
         import_urdf(urdf_path=urdf_p, dest_path=usd_p)
 
     simulation_app.close()
