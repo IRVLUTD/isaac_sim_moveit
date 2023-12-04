@@ -46,8 +46,8 @@ ArmHardwareInterface::ArmHardwareInterface(const std::string &arm_name, double l
     cuff_squeezed_previous(false)
 {
   // Populate joints in this arm
-  joint_names_.push_back("l_wheel_joint");
-  joint_names_.push_back("r_wheel_joint");
+  // joint_names_.push_back("l_wheel_joint");
+  // joint_names_.push_back("r_wheel_joint");
   joint_names_.push_back("torso_lift_joint");
   joint_names_.push_back("bellows_joint");
   joint_names_.push_back("head_pan_joint");
@@ -59,8 +59,8 @@ ArmHardwareInterface::ArmHardwareInterface(const std::string &arm_name, double l
   joint_names_.push_back("forearm_roll_joint");
   joint_names_.push_back("wrist_flex_joint");
   joint_names_.push_back("wrist_roll_joint");
-  joint_names_.push_back("l_gripper_finger_joint");
-  joint_names_.push_back("r_gripper_finger_joint");
+  // joint_names_.push_back("l_gripper_finger_joint");
+  // joint_names_.push_back("r_gripper_finger_joint");
   n_dof_ = joint_names_.size();
 
   // Resize vectors
