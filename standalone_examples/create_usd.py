@@ -4,6 +4,7 @@ import argparse
 from omni.isaac.kit import SimulationApp
 simulation_app = SimulationApp({"headless": True})
 import omni.kit.commands
+from omni.importer.urdf import _urdf
 
 
 def import_urdf(urdf_path, dest_path):
@@ -11,22 +12,26 @@ def import_urdf(urdf_path, dest_path):
 
     Args: None
     """
-    _status, _config = omni.kit.commands.execute("URDFCreateImportConfig")
-    _config.merge_fixed_joints = True
-    _config.convex_decomp = True
-    _config.import_inertia_tensor = True
-    _config.fix_base = True
-    _config.make_default_prim = True
-    _config.self_collision = False
-    _config.create_physics_scene = True
-    _config.import_inertia_tensor = False
-    _config.make_instanceable = True
-    _config.instanceable_usd_path = dest_path
+    # Set the settings in the import config
+    import_config = _urdf.ImportConfig()
+    import_config.merge_fixed_joints = False
+    import_config.convex_decomp = False
+    import_config.import_inertia_tensor = True
+    import_config.fix_base = True
+    import_config.make_default_prim = True
+    import_config.self_collision = False
+    import_config.create_physics_scene = True
+    import_config.import_inertia_tensor = False
+    import_config.default_drive_strength = 1047.19751
+    import_config.default_position_drive_damping = 52.35988
+    import_config.default_drive_type = _urdf.UrdfJointTargetType.JOINT_DRIVE_POSITION
+    import_config.distance_scale = 1
+    import_config.density = 0.0
 
     result = omni.kit.commands.execute(
             "URDFParseAndImportFile", 
             urdf_path=urdf_path, 
-            import_config=_config, 
+            import_config=import_config, 
             dest_path=dest_path
     )
     return
@@ -53,7 +58,7 @@ if __name__ == "__main__":
 
     model_names = ['003_cracker_box', '004_sugar_box', '005_tomato_soup_can', '006_mustard_bottle', \
                 '007_tuna_fish_can', '008_pudding_box', '009_gelatin_box', '010_potted_meat_can', '011_banana', \
-                '021_bleach_cleanser', '024_bowl', '025_mug', '037_scissors', '040_large_marker', \
+                '021_bleach_cleanser', '024_bowl', '025_mug', '035_power_drill', '037_scissors', '040_large_marker', \
                 '052_extra_large_clamp', 'cafe_table_org']
    
     for model in model_names:
@@ -63,8 +68,6 @@ if __name__ == "__main__":
         urdf_p  = os.path.join(model_p, f"{model}.urdf")
         usd_p = os.path.join(model_p, f"{model}.usd")
         print(usd_p)
-        if os.path.exists(usd_p):
-            os.remove(usd_p)
         import_urdf(urdf_path=urdf_p, dest_path=usd_p)
 
     simulation_app.close()

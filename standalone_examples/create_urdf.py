@@ -15,7 +15,7 @@ parser.add_argument('-o', '--output_dir', type=str, default='./root-urdfs/', hel
 def get_urdf_file(ycb_model: str, mesh_path: str) -> str:
     URDF_TEMPLATE = '''<?xml version='1.0' encoding='ASCII'?>
 <robot name="{ycb_model_name}">
-    <link name="baseLink">
+    <link name="object_{ycb_model_name}_base_link">
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
@@ -52,7 +52,7 @@ def main(args):
 
     model_names = ['003_cracker_box', '004_sugar_box', '005_tomato_soup_can', '006_mustard_bottle', \
                 '007_tuna_fish_can', '008_pudding_box', '009_gelatin_box', '010_potted_meat_can', '011_banana', \
-                '021_bleach_cleanser', '024_bowl', '025_mug', '037_scissors', '040_large_marker', \
+                '021_bleach_cleanser', '024_bowl', '025_mug', '035_power_drill', '037_scissors', '040_large_marker', \
                 '052_extra_large_clamp', 'cafe_table_org']
 
     for model in model_names:
