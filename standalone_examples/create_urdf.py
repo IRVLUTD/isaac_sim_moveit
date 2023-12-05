@@ -1,5 +1,7 @@
 import argparse
 import os
+import open3d as o3d
+import numpy as np
 
 parser = argparse.ArgumentParser(description='Prepare root Scan-3D objects URDFs for Pybullet/IsaacSim',
     usage="\
@@ -12,7 +14,7 @@ parser.add_argument('-o', '--output_dir', type=str, default='./root-urdfs/', hel
 # parser.add_argument('-t', '--mesh_type', type=str, default='root_16k', help='Which mesh types desired (root__16k, 64k etc...')
 
 
-def get_urdf_file(ycb_model: str, mesh_path: str) -> str:
+def get_urdf_file(ycb_model: str, mesh_path: str, mass, ixx, iyy, izz) -> str:
     URDF_TEMPLATE = '''<?xml version='1.0' encoding='ASCII'?>
 <robot name="{ycb_model_name}">
     <link name="object_{ycb_model_name}_base_link">
@@ -32,12 +34,12 @@ def get_urdf_file(ycb_model: str, mesh_path: str) -> str:
             </geometry>
         </collision>   
         <inertial>
-            <mass value="1.0"/>
-            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            <mass value="{mass}"/>
+            <inertia ixx="{ixx}" ixy="0.0" ixz="0.0" iyy="{iyy}" iyz="0.0" izz="{izz}" />
         </inertial>
     </link>
 </robot>'''
-    return URDF_TEMPLATE.format(ycb_model_name=ycb_model, ycb_model_mesh_path=mesh_path)
+    return URDF_TEMPLATE.format(ycb_model_name=ycb_model, ycb_model_mesh_path=mesh_path, mass=mass, ixx=ixx, iyy=iyy, izz=izz)
 
 
 def main(args):
@@ -53,15 +55,23 @@ def main(args):
     model_names = ['003_cracker_box', '004_sugar_box', '005_tomato_soup_can', '006_mustard_bottle', \
                 '007_tuna_fish_can', '008_pudding_box', '009_gelatin_box', '010_potted_meat_can', '011_banana', \
                 '021_bleach_cleanser', '024_bowl', '025_mug', '035_power_drill', '037_scissors', '040_large_marker', \
-                '052_extra_large_clamp', 'cafe_table_org']
+                '052_extra_large_clamp']
+    masses = [0.41, 0.48, 0.348, 0.612, 0.176, 0.184, 0.096, 0.366, 0.062, 1.1, 0.128, 0.104, 0.612, 0.084, 0.014, 0.12]  
 
-    for model in model_names:
-        if model == 'cafe_table_org':
-            mesh = 'meshes/cafe_table.dae'
-        else:
-            mesh = 'textured_simple.obj'
+    for i, model in enumerate(model_names):
+        mass = masses[i]
+        mesh_name = 'textured_simple.obj'
+        print(mass)
 
-        urdf_content = get_urdf_file(model, mesh)
+        # read obj file to compute inertia
+        filename = os.path.join(args.root_dir, model, mesh_name)
+        mesh = o3d.io.read_triangle_mesh(filename)
+        w, h, l = mesh.get_axis_aligned_bounding_box().get_extent()
+        ixx = mass * (w*w + h*h) / 12
+        iyy = mass * (l*l + h*h) / 12
+        izz = mass * (l*l + w*w) / 12
+
+        urdf_content = get_urdf_file(model, mesh_name, mass, ixx, iyy, izz)
         # sample fname: 021_bleach_cleanser.urdf
         urdf_fname = f"{model}.urdf"
         output_file = os.path.join(args.root_dir, model, urdf_fname)
