@@ -6,6 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /MarkerArray1
+        - /PlanningScene1
         - /PlanningScene1/Scene Robot1
         - /MotionPlanning1
         - /MotionPlanning1/Scene Geometry1
@@ -363,7 +364,7 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-        Loop Animation: false
+        Loop Animation: true
         Robot Alpha: 0.5
         Robot Color: 150; 50; 150
         Show Robot Collision: false
@@ -589,9 +590,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.34520360827445984
+      Pitch: 0.4202035963535309
       Target Frame: panda_link0
-      Yaw: 6.114959239959717
+      Yaw: 6.019959926605225
     Saved: ~
 Window Geometry:
   Displays:
@@ -611,5 +612,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1920
-  X: 0
+  X: 1462
   Y: 27

@@ -17,7 +17,7 @@ def import_urdf(urdf_path, dest_path):
     import_config.merge_fixed_joints = False
     import_config.convex_decomp = False
     import_config.import_inertia_tensor = True
-    import_config.fix_base = True
+    import_config.fix_base = False  # do not fix base for objects
     import_config.make_default_prim = True
     import_config.self_collision = False
     import_config.create_physics_scene = True
