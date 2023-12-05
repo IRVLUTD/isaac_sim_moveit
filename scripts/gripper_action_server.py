@@ -47,9 +47,11 @@ class GripperAction(object):
         joint_commands.position = joints_dict.values()
 
         # Publishing combined message containing all arm and finger joints
-        for i in range(100):
+        rate = rospy.Rate(30)
+        for i in range(90):
             self._pub.publish(joint_commands)
             print(joint_commands)
+            rate.sleep()
         self._as.set_succeeded()
         
 if __name__ == '__main__':
