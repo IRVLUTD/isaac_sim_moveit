@@ -4,6 +4,7 @@ import rospy
 import actionlib
 import control_msgs.msg
 import std_msgs.msg
+import numpy as np
 
 from sensor_msgs.msg import JointState
 
@@ -26,13 +27,6 @@ class GripperAction(object):
         if self._joint_state is None:
             print('no joint state recieved in gripper action server')
             return
-        
-        gripper_position = goal.command.position
-        joint_commands = JointState()
-
-        header = std_msgs.msg.Header()
-        header.stamp = rospy.Time.now()
-        joint_commands.header = header
 
         joints_dict = {}
         for i, name in enumerate(self._joint_state.name):
@@ -40,15 +34,26 @@ class GripperAction(object):
             joints_dict[name] = self._joint_state.position[i]
 
         # set finger positions
-        joints_dict[self._gripper_joints[0]] = gripper_position * 0.5
-        joints_dict[self._gripper_joints[1]] = gripper_position * 0.5
-
-        joint_commands.name = joints_dict.keys()
-        joint_commands.position = joints_dict.values()
+        len = 90
+        gripper_position = goal.command.position * 0.5
+        start = joints_dict[self._gripper_joints[0]]
+        pos = np.linspace(start, gripper_position, num=len)
 
         # Publishing combined message containing all arm and finger joints
         rate = rospy.Rate(30)
-        for i in range(90):
+        for p in pos:
+            joint_commands = JointState()
+
+            header = std_msgs.msg.Header()
+            header.stamp = rospy.Time.now()
+            joint_commands.header = header            
+
+            joints_dict[self._gripper_joints[0]] = p
+            joints_dict[self._gripper_joints[1]] = p
+
+            joint_commands.name = joints_dict.keys()
+            joint_commands.position = joints_dict.values()
+
             self._pub.publish(joint_commands)
             print(joint_commands)
             rate.sleep()
