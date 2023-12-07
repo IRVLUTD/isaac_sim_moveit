@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import rospy
+import threading
 import actionlib
 import control_msgs.msg
 import std_msgs.msg
@@ -18,10 +19,26 @@ class GripperAction(object):
         self._as = actionlib.SimpleActionServer(self._action_name, control_msgs.msg.GripperCommandAction, execute_cb=self.execute_cb, auto_start = False)
         self._as.start()
         self._joint_state = None
+        self._joint_command = None
         self._gripper_joints = ['l_gripper_finger_joint', 'r_gripper_finger_joint']
+
+        # start publisher thread
+        self.start_publishing()
+
+    def start_publishing(self):
+        self.tf_thread = threading.Thread(target=self.joint_command_thread)
+        self.tf_thread.start()        
 
     def joint_states_callback(self, message):
         self._joint_state = message
+
+    # publish joint_command
+    def joint_command_thread(self):
+        rate = rospy.Rate(30.)
+        while not rospy.is_shutdown():
+            if self._joint_command is not None:
+                self._pub.publish(self._joint_command)
+            rate.sleep()  
       
     def execute_cb(self, goal):
         if self._joint_state is None:
@@ -39,23 +56,19 @@ class GripperAction(object):
         start = joints_dict[self._gripper_joints[0]]
         pos = np.linspace(start, gripper_position, num=len)
 
-        # Publishing combined message containing all arm and finger joints
-        rate = rospy.Rate(30)
+        # compute joint command
+        rate = rospy.Rate(30.)
         for p in pos:
-            joint_commands = JointState()
+            joint_command = JointState()
 
             header = std_msgs.msg.Header()
             header.stamp = rospy.Time.now()
-            joint_commands.header = header            
+            joint_command.header = header
+            joint_command.name = self._gripper_joints
+            joint_command.position = [p, p]
 
-            joints_dict[self._gripper_joints[0]] = p
-            joints_dict[self._gripper_joints[1]] = p
-
-            joint_commands.name = joints_dict.keys()
-            joint_commands.position = joints_dict.values()
-
-            self._pub.publish(joint_commands)
-            print(joint_commands)
+            self._joint_command = joint_command
+            print(joint_command)
             rate.sleep()
         self._as.set_succeeded()
         
